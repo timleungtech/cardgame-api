@@ -1,16 +1,17 @@
-let deckId = ''
+if(!localStorage.getItem('deckID')){
+  fetch('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+        .then(res => res.json()) // parse response as JSON
+        .then(data => {
+          console.log(data)
+          deckId = data.deck_id
+          localStorage.setItem('deckID', deckId)
+        })
+        .catch(err => {
+            console.log(`error ${err}`)
+        });
+      }
 
-fetch('https://www.deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-      .then(res => res.json()) // parse response as JSON
-      .then(data => {
-        console.log(data)
-        deckId = data.deck_id
-        
-      })
-      .catch(err => {
-          console.log(`error ${err}`)
-      });
-
+let deckId = localStorage.getItem('deckID')
 
 document.querySelector('button').addEventListener('click', drawTwo)
 
